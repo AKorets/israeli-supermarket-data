@@ -118,121 +118,96 @@ def generate_stores_configurations(output_folder):
 
     names = generate_store_dictionary_lower_case()
     generate_conf(all_scrappers.DorAlon(output_folder), my_mapper,
-                    names , ignore, "utf-16")
+                    names, ignore, "utf-16")
 
     generate_conf(all_scrappers.GoodPharm(output_folder), my_mapper,
-                    names ,
-                    ignore, "utf-8")
+                    names, ignore, "utf-8")
 
     generate_conf(all_scrappers.HaziHinam(output_folder), my_mapper,
-                    names ,
-                    ignore, 'UTF-16')
+                    names, ignore, 'UTF-16')
 
     generate_conf(all_scrappers.Keshet(output_folder), my_mapper,
-                    names ,
-                    ignore, 'UTF-16')
+                    names, ignore, 'UTF-16')
 
     generate_conf(all_scrappers.KingStore(output_folder), my_mapper,
-                    names ,
-                    ignore, 'UTF-8')
+                    names, ignore, 'UTF-8')
 
     generate_conf(all_scrappers.Maayan2000(output_folder), my_mapper,
-                    names ,
-                    ignore, 'UTF-8')
+                    names, ignore, 'UTF-8')
 
     names = generate_store_dictionary()
     generate_conf(all_scrappers.MahsaniAShuk(output_folder), my_mapper,
-                    names ,
-                    ignore, 'UTF-8')
+                    names, ignore, 'UTF-8')
 
     names = generate_store_dictionary_lower_case()
     generate_conf(all_scrappers.Mega(output_folder), my_mapper,
-                    names ,
-                    ignore, 'UTF-16')
+                    names, ignore, 'UTF-16')
 
     generate_conf(all_scrappers.MegaMarket(output_folder), my_mapper,
-                    names ,
-                    ignore, 'UTF-16')
+                    names, ignore, 'UTF-16')
 
     generate_conf(all_scrappers.NetivHasef(output_folder), my_mapper,
-                    names ,
-                    ignore, 'UTF-8')
+                    names, ignore, 'UTF-8')
 
     generate_conf(all_scrappers.Osherad(output_folder), my_mapper,
-                    names ,
-                    ignore, 'UTF-16')
+                    names, ignore, 'UTF-16')
 
     generate_conf(all_scrappers.Polizer(output_folder), my_mapper,
-                    names ,
-                    ignore, 'UTF-16')
+                    names, ignore, 'UTF-16')
 
     generate_conf(all_scrappers.RamiLevy(output_folder), my_mapper,
-                    names ,
-                    ignore, 'UTF-16', 'storesfull')
+                    names, ignore, 'UTF-16', 'storesfull')
 
     #names = generate_store_dictionary_lower_case()
     #my_mapper.parseStore('data/Rami Levy/storesfull7290058140886-000-202303150655.xml',
     #                      d, ignore, 'UTF-8')
 
     generate_conf(all_scrappers.SalachDabach(output_folder), my_mapper,
-                     names ,
-                     ignore, 'UTF-16')
+                     names, ignore, 'UTF-16')
 
     names = generate_store_dictionary_lower_case()
     generate_conf(all_scrappers.ShefaBarcartAshem(output_folder), my_mapper,
-                    names ,
-                    ignore, 'UTF-8')
+                    names, ignore, 'UTF-8')
 
     shufersal_ignore = ['SUBCHAINNAME', 'CHAINNAME']
     names = {'SUBCHAINID':'SubChainID','CHAINID':'ChainID','LASTUPDATEDATE':'LastUpdateDate',
             'STOREID':'StoreID' , 'BIKORETNO':'BikoretNo','STORETYPE':'StoreType',
             'STORENAME':'StoreName','ADDRESS':'Address' , 'CITY':'City' , 'ZIPCODE':'ZIPCode'}
     generate_conf(all_scrappers.Shufersal(output_folder), my_mapper,
-                    names ,
-                    shufersal_ignore, 'UTF-8-sig')
+                    names, shufersal_ignore, 'UTF-8-sig')
 
     names = generate_store_dictionary_lower_case()
     generate_conf(all_scrappers.ShukAhir(output_folder), my_mapper,
-                    names ,
-                    ignore, 'UTF-8')
+                    names, ignore, 'UTF-8')
 
     generate_conf(all_scrappers.StopMarket(output_folder), my_mapper,
-                    names ,
-                    ignore, 'UTF-16')
+                    names, ignore, 'UTF-16')
 
     generate_conf(all_scrappers.SuperPharm(output_folder), my_mapper,
-                    names ,
-                    ignore, 'ISO-8859-8')
+                    names, ignore, 'ISO-8859-8')
 
     generate_conf(all_scrappers.SuperYuda(output_folder), my_mapper,
-                    names ,
-                    ignore, 'UTF-8')
+                    names, ignore, 'UTF-8')
 
     generate_conf(all_scrappers.TivTaam(output_folder), my_mapper,
-                    names ,
-                    ignore, 'UTF-16')
+                    names, ignore, 'UTF-16')
 
     names = generate_store_dictionary()
     generate_conf(all_scrappers.Victory(output_folder), my_mapper,
-                    names ,
-                    ignore, 'UTF-8')
+                    names, ignore, 'UTF-8')
 
     names = generate_store_dictionary_lower_case()
     generate_conf(all_scrappers.YaynotBitan(output_folder), my_mapper,
-                    names ,
-                    ignore, 'UTF-16')
+                    names, ignore, 'UTF-16')
 
     generate_conf(all_scrappers.Yellow(output_folder), my_mapper,
-                    names ,
-                    ignore, 'UTF-16')
+                    names, ignore, 'UTF-16')
 
     generate_conf(all_scrappers.Yohananof(output_folder), my_mapper,
-                    names ,
-                    ignore, 'UTF-16')
+                    names, ignore, 'UTF-16')
 
     generate_conf(all_scrappers.ZolVeBegadol(output_folder), my_mapper,
-                    names ,
-                    ignore, 'UTF-8')
+                    names, ignore, 'UTF-8')
 
 if __name__ == "__main__":
     output_folder = "data"

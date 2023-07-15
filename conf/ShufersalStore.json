@@ -1,0 +1,20 @@
+{
+    "encoding": "UTF-8-sig",
+    "nameDict": {
+        "SUBCHAINID": "SubChainID",
+        "CHAINID": "ChainID",
+        "LASTUPDATEDATE": "LastUpdateDate",
+        "STOREID": "StoreID",
+        "BIKORETNO": "BikoretNo",
+        "STORETYPE": "StoreType",
+        "STORENAME": "StoreName",
+        "ADDRESS": "Address",
+        "CITY": "City",
+        "ZIPCODE": "ZIPCode"
+    },
+    "ignore": [
+        "SUBCHAINNAME",
+        "CHAINNAME"
+    ],
+    "ignoreFile": "ignore"
+}

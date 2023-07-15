@@ -1,0 +1,26 @@
+{
+    "encoding": "UTF-16",
+    "nameDict": {
+        "SubChainId": "SubChainID",
+        "ChainId": "ChainID",
+        "LastUpdateDate": "LastUpdateDate",
+        "StoreId": "StoreID",
+        "BikoretNo": "BikoretNo",
+        "StoreType": "StoreType",
+        "StoreName": "StoreName",
+        "Address": "Address",
+        "City": "City",
+        "ZipCode": "ZIPCode"
+    },
+    "ignore": [
+        "Latitude",
+        "Longitude",
+        "ChainName",
+        "SubChainName",
+        "Branches",
+        "XmlDocVersion",
+        "SubChains",
+        "LastUpdateTime"
+    ],
+    "ignoreFile": "ignore"
+}

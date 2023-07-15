@@ -10,7 +10,7 @@
         "StoreName": "StoreName",
         "Address": "Address",
         "City": "City",
-        "ZIPCode": "ZIPCode"
+        "ZIPCode": "ZipCode"
     },
     "ignore": [
         "Latitude",

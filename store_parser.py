@@ -18,9 +18,15 @@ def get_root(xml_file, encoding):
 
     return objectify.fromstring(xml)
 
-def save_store_conf(chain_name, data):
+def save_store_conf(chain_name, encoding, name_dict, ignore_dict, ignore_file):
     """save store configuration"""
     conf_path = f'conf/{chain_name}Store.json'
+    data = {
+        "encoding": encoding,
+        "nameDict":name_dict,
+        "ignore":ignore_dict,
+        "ignoreFile":ignore_file
+    }
     save_conf(conf_path, data)
     return conf_path
 

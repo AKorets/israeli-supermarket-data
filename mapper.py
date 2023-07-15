@@ -98,13 +98,7 @@ def generate_conf(scrapper, my_mapper, name_dict, ignore_dict,
         print(f'Failed to find file for scrapper {scrapper.chain}')
         return
     my_mapper.parse_store(data_files[0], name_dict, ignore_dict, encoding)
-    data = {
-        "encoding": encoding,
-        "nameDict":name_dict,
-        "ignore":ignore_dict,
-        "ignoreFile":ignore_file
-    }
-    conf_path = save_store_conf(scrapper.chain, data)
+    conf_path = save_store_conf(scrapper.chain, encoding, name_dict, ignore_dict, ignore_file)
     print(f'Saving to     {conf_path}\n')
 
 def generate_stores_configurations(output_folder):

@@ -7,14 +7,14 @@ The class is printing python table code, to the output
 
 @author: avi k
 """
-import il_supermarket_scarper.scrappers as all_scrappers
-from store_parser import get_root, generate_store_dictionary
-from store_parser import generate_store_dictionary_lower_case, save_store_conf
 import glob
 import os
+import shutil
+import il_supermarket_scarper.scrappers as all_scrappers
 from il_supermarket_scarper.utils.file_types import FileTypesFilters
 from il_supermarket_scarper.main import ScarpingTask
-import shutil
+from store_parser import get_root, generate_store_dictionary
+from store_parser import generate_store_dictionary_lower_case, save_store_conf
 
 
 
@@ -83,15 +83,17 @@ class Mapper:
             print (f'The format of {xml_path} is parsed')
 
 def delete_files(path, pattern):
-    for f in glob.iglob(os.path.join(path, pattern)):
-        os.remove(f)
+    """delete files by pattern"""
+    for file in glob.iglob(os.path.join(path, pattern)):
+        os.remove(file)
 
 def generate_conf(scrapper, my_mapper, name_dict, ignore_dict,
                     encoding, ignore_file='ignore'):
     """generate store configuration from name dictionary and xml dictionary and other parameter"""
     delete_files(scrapper.get_storage_path(), ignore_file+'*.xml')
     pattern = f'{FileTypesFilters.STORE_FILE.value["should_contain"]}*.xml'
-    data_files = [file for file in glob.iglob(os.path.join(scrapper.get_storage_path(), pattern))]
+    data_files = list(file for file in
+                        glob.iglob(os.path.join(scrapper.get_storage_path(), pattern)))
     if not data_files:
         print(f'Failed to find file for scrapper {scrapper.chain}')
         return
@@ -209,8 +211,13 @@ def generate_stores_configurations(output_folder):
     generate_conf(all_scrappers.ZolVeBegadol(output_folder), my_mapper,
                     names, ignore, 'UTF-8')
 
-if __name__ == "__main__":
+def generate_stores_configurations_base():
+    """start generate_stores_configurations"""
     output_folder = "data"
-    scrapper_done = ScarpingTask(dump_folder_name=output_folder, only_latest=True, files_types=[FileTypesFilters.STORE_FILE.name]).start()
+    ScarpingTask(dump_folder_name=output_folder, only_latest=True,
+                                    files_types=[FileTypesFilters.STORE_FILE.name]).start()
     generate_stores_configurations(output_folder)
     shutil.rmtree(output_folder)
+
+if __name__ == "__main__":
+    generate_stores_configurations_base()

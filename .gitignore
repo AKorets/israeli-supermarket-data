@@ -3,3 +3,6 @@ venv/Lib
 venv/Scripts
 *.bak
 logging.log
+conf/all_stores.json
+__pycache__/
+all_stores_output.txt

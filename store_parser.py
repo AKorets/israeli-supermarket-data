@@ -114,7 +114,8 @@ def download_all_stores(progress_bar=None):
     for scrapper in ScraperFactory:
         ScarpingTask(dump_folder_name=output_folder, only_latest=True,
                                         files_types=[FileTypesFilters.STORE_FILE.name],
-                                        enabled_scrapers=[scrapper]).start()
+                                        enabled_scrapers=[scrapper],
+                                        lookup_in_db=False).start()
         if progress_bar:
             progress_bar.value += 1
 

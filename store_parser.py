@@ -5,7 +5,11 @@ Used to parse all store file formats
 """
 import codecs
 import os
+import shutil
 from lxml import objectify
+from il_supermarket_scarper.main import ScarpingTask
+from il_supermarket_scarper.scrappers_factory import ScraperFactory
+from il_supermarket_scarper.utils.file_types import FileTypesFilters
 from tools import save_conf, load_conf
 
 def get_root(xml_file, encoding):
@@ -99,12 +103,41 @@ def analyse_store_folder(folder_path, chain_name, stores_data):
     return total_stores
 
 def clean_city_name(city_name):
+    """clean city name"""
     if not city_name:
         return 'None'
     return city_name.replace('-',' ')
 
-def get_city_stat():   
-    stores_data = load_conf('conf/all_stores.json') 
+def download_all_stores(progress_bar=None):
+    """create unified store data inside all_stores.json"""
+    output_folder = "data"
+    for scrapper in ScraperFactory:
+        ScarpingTask(dump_folder_name=output_folder, only_latest=True,
+                                        files_types=[FileTypesFilters.STORE_FILE.name],
+                                        enabled_scrapers=[scrapper]).start()
+        if progress_bar:
+            progress_bar.value += 1
+
+    all_scrapers = ScraperFactory.all_scrapers()
+    scrappers = [s(output_folder) for s in all_scrapers]
+    stores_data = {}
+    total_stores = 0
+    for scrapper in scrappers:
+        total_stores += analyse_store_folder(scrapper.get_storage_path(),
+                                                scrapper.chain, stores_data)
+    conf_path = 'conf/all_stores.json'
+    save_conf(conf_path, stores_data)
+    shutil.rmtree(output_folder)
+
+def get_city_stat(progress_bar=None):
+    """get statistics of stores count per city name"""
+    all_stores_path = 'conf/all_stores.json'
+    if not os.path.isfile(all_stores_path):
+        download_all_stores(progress_bar)
+    else:
+        if progress_bar:
+            progress_bar.value = progress_bar.max
+    stores_data = load_conf(all_stores_path)
     city_stat = {}
     city_name_correction = load_conf('conf/city_name_correction.json')
     #save_conf('conf/city_name_correction.json', city_name_correction)
@@ -114,5 +147,5 @@ def get_city_stat():
         city_name_temp = clean_city_name(city_name_temp)
         city_name = city_name_correction.get(city_name_temp, city_name_temp)
         city_stat[city_name] = city_stat.get(city_name, 0) + 1
-    city_stat_sorter = sorted(city_stat.items(), key=lambda x:x[1])
+    #city_stat_sorter = sorted(city_stat.items(), key=lambda x:x[1])
     return city_stat

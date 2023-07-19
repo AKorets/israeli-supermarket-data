@@ -97,3 +97,22 @@ def analyse_store_folder(folder_path, chain_name, stores_data):
     else:
         print(f'skipping {chain_name}')
     return total_stores
+
+def clean_city_name(city_name):
+    if not city_name:
+        return 'None'
+    return city_name.replace('-',' ')
+
+def get_city_stat():   
+    stores_data = load_conf('conf/all_stores.json') 
+    city_stat = {}
+    city_name_correction = load_conf('conf/city_name_correction.json')
+    #save_conf('conf/city_name_correction.json', city_name_correction)
+
+    for key in stores_data:
+        city_name_temp = stores_data[key]['City']
+        city_name_temp = clean_city_name(city_name_temp)
+        city_name = city_name_correction.get(city_name_temp, city_name_temp)
+        city_stat[city_name] = city_stat.get(city_name, 0) + 1
+    city_stat_sorter = sorted(city_stat.items(), key=lambda x:x[1])
+    return city_stat

@@ -1,6 +1,7 @@
 Israel Supermarket Data: Transform and visualize the data that published by the supermarkets.
 =======================================
 The data downloading used by [israeli-supermarket-scarpers](https://github.com/erlichsefi/israeli-supermarket-scarpers/) project
+
 [![Pylint](https://github.com/AKorets/israeli-supermarket-data/actions/workflows/pylint.yml/badge.svg)](https://github.com/AKorets/israeli-supermarket-data/actions/workflows/pylint.yml)
 
 Example

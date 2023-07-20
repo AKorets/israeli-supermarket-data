@@ -1,6 +1,6 @@
 Israel Supermarket Data: Transform and visualize the data that published by the supermarkets.
 =======================================
-The data downloading used by [israeli-supermarket-scarpers project](https://github.com/erlichsefi/israeli-supermarket-scarpers/)
+The data downloading used by [israeli-supermarket-scarpers](https://github.com/erlichsefi/israeli-supermarket-scarpers/) project
 
 Example
 -----------

@@ -108,8 +108,14 @@ def clean_city_name(city_name):
         return 'None'
     return city_name.replace('-',' ')
 
-def download_all_stores(progress_bar=None):
+def download_all_stores(progress_bar=None, force=False):
     """create unified store data inside all_stores.json"""
+    all_stores_path = 'conf/all_stores.json'
+    if os.path.isfile(all_stores_path) and not force:
+        return
+
+    if progress_bar:
+        progress_bar.value = progress_bar.max
     output_folder = "data"
     for scrapper in ScraperFactory:
         ScarpingTask(dump_folder_name=output_folder, only_latest=True,
@@ -133,11 +139,7 @@ def download_all_stores(progress_bar=None):
 def get_city_stat(progress_bar=None):
     """get statistics of stores count per city name"""
     all_stores_path = 'conf/all_stores.json'
-    if not os.path.isfile(all_stores_path):
-        download_all_stores(progress_bar)
-    else:
-        if progress_bar:
-            progress_bar.value = progress_bar.max
+    download_all_stores(progress_bar)
     stores_data = load_conf(all_stores_path)
     city_stat = {}
     city_name_correction = load_conf('conf/city_name_correction.json')

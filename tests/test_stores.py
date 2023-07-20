@@ -3,6 +3,7 @@ from store_parser import download_all_stores
 from tools import load_conf
 
 def test_online_list():
+    """test if list of online stores are same"""
     download_all_stores()
     url_list = set()
     stores_data = load_conf('conf/all_stores.json')

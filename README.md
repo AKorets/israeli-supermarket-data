@@ -5,13 +5,17 @@ The data downloading used by [israeli-supermarket-scarpers project](https://gith
 Example
 -----------
 Example of map with that shows statistics of store per city
+
 ![Store Per City Map](img/Map.png)
 
 Store per city chart
+
 ![Store Per City chart](img/Store_per_city.png)
 
 Quick start
 -----------
+
+This set of command, installed the project on your computer, and run it on [jupyter](https://jupyter.org/)
 
 	git clone https://github.com/AKorets/israeli-supermarket-data
 	cd israeli-supermarket-data

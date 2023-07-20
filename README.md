@@ -4,8 +4,10 @@ The data downloading used by [israeli-supermarket-scarpers project](https://gith
 
 Example
 -----------
+Example of map with that shows statistics of store per city
 ![Store Per City Map](img/Map.png)
 
+Store per city chart
 ![Store Per City chart](img/Store_per_city.png)
 
 Quick start
@@ -16,3 +18,4 @@ Quick start
 	python -m venv venv
 	venv\Scripts\activate.bat
 	pip install -r requirements.txt
+	jupyter notebook city_visual.ipynb

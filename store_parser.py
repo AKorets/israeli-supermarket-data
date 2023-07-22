@@ -112,7 +112,8 @@ def download_all_stores(progress_bar=None, force=False):
     """create unified store data inside all_stores.json"""
     all_stores_path = 'conf/all_stores.json'
     if os.path.isfile(all_stores_path) and not force:
-        return
+        stores_data = load_conf(all_stores_path)
+        return stores_data
 
     if progress_bar:
         progress_bar.value = progress_bar.max
@@ -132,15 +133,13 @@ def download_all_stores(progress_bar=None, force=False):
     for scrapper in scrappers:
         total_stores += analyse_store_folder(scrapper.get_storage_path(),
                                                 scrapper.chain, stores_data)
-    conf_path = 'conf/all_stores.json'
-    save_conf(conf_path, stores_data)
+    save_conf(all_stores_path, stores_data)
     shutil.rmtree(output_folder)
+    return stores_data
 
 def get_city_stat(progress_bar=None):
     """get statistics of stores count per city name"""
-    all_stores_path = 'conf/all_stores.json'
-    download_all_stores(progress_bar)
-    stores_data = load_conf(all_stores_path)
+    stores_data = download_all_stores(progress_bar)
     city_stat = {}
     city_name_correction = load_conf('conf/city_name_correction.json')
     #save_conf('conf/city_name_correction.json', city_name_correction)

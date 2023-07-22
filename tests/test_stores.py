@@ -1,6 +1,5 @@
 import re
 from store_parser import download_all_stores, get_city_stat
-from tools import load_conf
 
 def test_online_list():
     """test if list of online stores are same"""
@@ -18,6 +17,7 @@ def test_online_list():
     assert not difference
 
 def test_top_cities():
+    """test top cities (arranged by store in city count)"""
     city_stat = get_city_stat()
     del city_stat['unknown']
     del city_stat['None']

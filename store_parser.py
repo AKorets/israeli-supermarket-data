@@ -117,7 +117,7 @@ def download_all_stores(progress_bar=None, force=False):
 
     if progress_bar:
         progress_bar.value = progress_bar.max
-    output_folder = "data"
+    output_folder = "data_stores"
     for scrapper in ScraperFactory:
         ScarpingTask(dump_folder_name=output_folder, only_latest=True,
                                         files_types=[FileTypesFilters.STORE_FILE.name],

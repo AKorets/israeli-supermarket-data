@@ -1,0 +1,39 @@
+{
+    "ignore": [
+        "itemstatus",
+        "itemid",
+        "lastupdatetime",
+        "xmldocversion",
+        "bikoretno",
+        "lastupdatedate",
+        "dllverno",
+        "itemtype"
+    ],
+    "tags_dict": {
+        "itemnm": "itemname",
+        "manufacturername": "manufacturename",
+        "manufactureritemdescription": "manufactureitemdescription",
+        "unitofmeasure": "unitmeasure",
+        "blsweighted": "bisweighted"
+    },
+    "tags": [
+        "itemprice",
+        "unitmeasure",
+        "manufactureitemdescription",
+        "storeid",
+        "subchainid",
+        "unitofmeasureprice",
+        "chainid",
+        "priceupdatedate",
+        "allowdiscount",
+        "itemname",
+        "quantity",
+        "manufacturecountry",
+        "bisweighted",
+        "itemcode",
+        "unitqty",
+        "manufacturename",
+        "qtyinpackage",
+        "itemtype"
+    ]
+}

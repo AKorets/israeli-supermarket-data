@@ -10,12 +10,14 @@ The class is printing python table code, to the output
 import glob
 import os
 import shutil
+from pprint import pprint
+from il_supermarket_scarper.scrappers_factory import ScraperFactory
 import il_supermarket_scarper.scrappers as all_scrappers
 from il_supermarket_scarper.utils.file_types import FileTypesFilters
 from il_supermarket_scarper.main import ScarpingTask
+from tools import save_conf
 from store_parser import get_root, generate_store_dictionary
 from store_parser import generate_store_dictionary_lower_case, save_store_conf
-
 
 
 class Mapper:
@@ -81,6 +83,20 @@ class Mapper:
 
         if self.smart_print(root, ignore_dict, name_dict):
             print (f'The format of {xml_path} is parsed')
+
+    def check_prices_tags(self, file, encoding, tags, ignore, tags_dict):
+        """find all new or missing tags (that doesnt part of tags or ignore dictionaries)"""
+        root = get_root(file, encoding)
+        tag_set = set()
+        self.all_value_tags(root, tag_set)
+        lowcase_tag_set = [tags_dict.get(tag.lower(), tag.lower()) for tag in tag_set]
+        new_tag = [tag for tag in lowcase_tag_set if not tag in tags and not tag in ignore]
+        if new_tag:
+            print('new_tag', new_tag)
+        missing_tag = [tag for tag in tags if not tag in lowcase_tag_set]
+        if missing_tag:
+            print('missing_tag', missing_tag)
+        return {'new_tag':new_tag, 'missing_tag':missing_tag}
 
 def delete_files(path, pattern):
     """delete files by pattern"""
@@ -207,11 +223,99 @@ def generate_stores_configurations(output_folder):
 
 def generate_stores_configurations_base():
     """start generate_stores_configurations"""
-    output_folder = "data"
+    output_folder = "data_stores"
     ScarpingTask(dump_folder_name=output_folder, only_latest=True,
-                                    files_types=[FileTypesFilters.STORE_FILE.name]).start()
+                                     files_types=[FileTypesFilters.STORE_FILE.name],
+                                     lookup_in_db=False).start()
     generate_stores_configurations(output_folder)
     shutil.rmtree(output_folder)
 
+def get_data_file(data_files, encoding):
+    """get first xml, that doesn't contains Items Count="0" (even it doesn't loading), 
+    to skip dor alon empty price files"""
+    for file_path in data_files:
+        with open(file_path, encoding=encoding) as file:
+            try:
+                if 'Items Count="0"' not in file.read():#workaround for dor alon, empty prices file
+                    return file_path
+            except: # pylint: disable=bare-except #not dor alon
+                return file_path
+    return ""
+
+def download_all_prices(tags, ignore, tags_dict):
+    """show current status of prices xmls (from all providers) """
+    output_folder = "price_data"
+    run_result = {}
+    provider_encoding = {}
+    used_files = []
+    my_mapper = Mapper()
+    for scrapper_class in ScraperFactory:
+        ScarpingTask(dump_folder_name=output_folder, only_latest=True,
+                                        files_types=FileTypesFilters.only_price(),
+                                        enabled_scrapers=[scrapper_class],
+                                        lookup_in_db=False).start()
+        pattern = f'{FileTypesFilters.PRICE_FILE.value["should_contain"]}*.xml'
+        scrapper = ScraperFactory.get(scrapper_class)(output_folder)
+        data_files = list(file for file in
+                            glob.iglob(os.path.join(scrapper.get_storage_path(), pattern)))
+        if not data_files:
+            print(f'Failed to find file for scrapper {scrapper.chain}')
+            return
+        #chain_name = scrapper.chain
+        #conf_path = get_store_conf_path(chain_name)
+        if scrapper.chain not in provider_encoding:
+            provider_encoding[scrapper.chain] = 'utf-8-sig'
+        print(scrapper.chain, provider_encoding[scrapper.chain])
+        data_file = get_data_file(data_files, provider_encoding[scrapper.chain])
+        used_files.append(data_file)
+        run_result[scrapper.chain] = my_mapper.check_prices_tags(data_file,
+                                                                 provider_encoding[scrapper.chain],
+                                                                 tags, ignore,
+                                                                 tags_dict)
+        shutil.rmtree(output_folder)
+    pprint(used_files)
+    pprint(provider_encoding)
+    pprint(run_result)
+
+def generate_prices_configuration():
+    """generate all_prices.json"""
+    ignore = {'lastupdatetime',
+          'bikoretno',
+          'itemstatus',
+          'dllverno', 
+          'xmldocversion',
+         'lastupdatedate',
+         'itemid',
+         'itemtype'}
+    tags_dict = {'itemnm':'itemname',
+                'manufacturername':'manufacturename',
+                'manufactureritemdescription':'manufactureitemdescription',
+                'unitofmeasure':'unitmeasure',
+                'blsweighted':'bisweighted'}
+    tags = {'chainid',
+          'subchainid',
+          'storeid',
+          'priceupdatedate',
+          'itemcode',
+          'itemtype',
+          'itemname',
+          'manufacturename',
+          'manufacturecountry',
+          'manufactureitemdescription',
+          'unitqty',
+          'quantity',
+          'unitmeasure',
+          'bisweighted',
+          'qtyinpackage',
+          'itemprice',
+          'unitofmeasureprice',
+          'allowdiscount'}
+    all_prices = {'ignore':  list(ignore),
+                 'tags_dict': tags_dict,
+                 'tags':list(tags)}
+    save_conf('conf/all_prices.json', all_prices)
+    download_all_prices(tags, ignore, tags_dict)
+
 if __name__ == "__main__":
     generate_stores_configurations_base()
+    generate_prices_configuration()

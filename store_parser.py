@@ -8,6 +8,7 @@ import shutil
 from il_supermarket_scarper.main import ScarpingTask
 from il_supermarket_scarper.scrappers_factory import ScraperFactory
 from il_supermarket_scarper.utils.file_types import FileTypesFilters
+from il_supermarket_scarper.utils import Logger
 from tools import save_conf, load_conf
 from xml_parser import get_root
 
@@ -81,14 +82,14 @@ def analyse_store_folder(folder_path, chain_name, stores_data):
         store_conf = load_conf(conf_path)
         for file in os.listdir(folder_path):
             if store_conf['ignoreFile'] in file:
-                print(f'ignored file {file}')
+                Logger.info(f'ignored file {file}')
             else:
                 full_path = os.path.join(folder_path, file)
                 store_count = analyse_store(store_conf, full_path, stores_data, chain_name)
                 total_stores += store_count
-                print(f'analysing {full_path} stores:{store_count}')
+                Logger.info(f'analysing {full_path} stores:{store_count}')
     else:
-        print(f'skipping {chain_name}')
+        Logger.info(f'skipping {chain_name}')
     return total_stores
 
 def clean_city_name(city_name):

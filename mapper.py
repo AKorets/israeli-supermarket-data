@@ -16,7 +16,8 @@ import il_supermarket_scarper.scrappers as all_scrappers
 from il_supermarket_scarper.utils.file_types import FileTypesFilters
 from il_supermarket_scarper.main import ScarpingTask
 from tools import save_conf
-from store_parser import get_root, generate_store_dictionary
+from xml_parser import get_root
+from store_parser import generate_store_dictionary
 from store_parser import generate_store_dictionary_lower_case, save_store_conf
 
 
@@ -261,8 +262,6 @@ def download_all_prices(tags, ignore, tags_dict):
         if not data_files:
             print(f'Failed to find file for scrapper {scrapper.chain}')
             return
-        #chain_name = scrapper.chain
-        #conf_path = get_store_conf_path(chain_name)
         if scrapper.chain not in provider_encoding:
             provider_encoding[scrapper.chain] = 'utf-8-sig'
         print(scrapper.chain, provider_encoding[scrapper.chain])

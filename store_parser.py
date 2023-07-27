@@ -3,24 +3,13 @@
 Used to parse all store file formats
 @author: Avi
 """
-import codecs
 import os
 import shutil
-from lxml import objectify
 from il_supermarket_scarper.main import ScarpingTask
 from il_supermarket_scarper.scrappers_factory import ScraperFactory
 from il_supermarket_scarper.utils.file_types import FileTypesFilters
 from tools import save_conf, load_conf
-
-def get_root(xml_file, encoding):
-    """get store xml root, in lxml format"""
-    with codecs.open(xml_file, encoding=encoding, errors="ignore") as store_file:
-        xml = store_file.read()
-        #print(xml[:90])
-        xml = xml.replace('<?xml version="1.0" encoding="ISO-8859-8" standalone="no" ?>\r\n','')
-        xml = xml.encode("UTF-16")
-
-    return objectify.fromstring(xml)
+from xml_parser import get_root
 
 def save_store_conf(chain_name, encoding, name_dict, ignore_dict, ignore_file):
     """save store configuration"""

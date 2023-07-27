@@ -1,4 +1,5 @@
 data/
+price_data/
 venv/etc
 venv/share
 venv/Lib

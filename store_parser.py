@@ -113,7 +113,7 @@ def download_all_stores(progress_bar=None, force=False):
                                         files_types=[FileTypesFilters.STORE_FILE.name],
                                         enabled_scrapers=[scrapper],
                                         lookup_in_db=False).start()
-        scrapper_imp = scrapper(output_folder)
+        scrapper_imp = ScraperFactory.get(scrapper)(output_folder)        
         if len(os.listdir(scrapper_imp.get_storage_path()))==0:
             ScarpingTask(dump_folder_name=output_folder, only_latest=False,
                                             files_types=[FileTypesFilters.STORE_FILE.name],

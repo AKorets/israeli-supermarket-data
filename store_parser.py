@@ -118,7 +118,7 @@ def download_all_stores(progress_bar=None, force=False):
                                             files_types=[FileTypesFilters.STORE_FILE.name],
                                             enabled_scrapers=[scrapper],
                                             lookup_in_db=False).start()
-            
+
         if progress_bar:
             progress_bar.value += 1
 

@@ -102,10 +102,10 @@ def download_all_stores(progress_bar=None, force=False):
     all_stores_path = 'conf/all_stores.json'
     if os.path.isfile(all_stores_path) and not force:
         stores_data = load_conf(all_stores_path)
+        if progress_bar:
+            progress_bar.value = progress_bar.max
         return stores_data
 
-    if progress_bar:
-        progress_bar.value = progress_bar.max
     output_folder = "data_stores"
     for scrapper in ScraperFactory:
         ScarpingTask(dump_folder_name=output_folder, only_latest=True,

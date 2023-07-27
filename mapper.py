@@ -11,7 +11,6 @@ import glob
 import os
 import shutil
 from pprint import pprint
-from il_supermarket_scarper.scrappers_factory import ScraperFactory
 import il_supermarket_scarper.scrappers as all_scrappers
 from il_supermarket_scarper.utils.file_types import FileTypesFilters
 from il_supermarket_scarper.main import ScarpingTask
@@ -19,6 +18,7 @@ from tools import save_conf
 from xml_parser import get_root
 from store_parser import generate_store_dictionary
 from store_parser import generate_store_dictionary_lower_case, save_store_conf
+from price_parser import enumerate_scrapper_with_files
 
 
 class Mapper:
@@ -250,15 +250,7 @@ def download_all_prices(tags, ignore, tags_dict):
     provider_encoding = {}
     used_files = []
     my_mapper = Mapper()
-    for scrapper_class in ScraperFactory:
-        ScarpingTask(dump_folder_name=output_folder, only_latest=True,
-                                        files_types=FileTypesFilters.only_price(),
-                                        enabled_scrapers=[scrapper_class],
-                                        lookup_in_db=False).start()
-        pattern = f'{FileTypesFilters.PRICE_FILE.value["should_contain"]}*.xml'
-        scrapper = ScraperFactory.get(scrapper_class)(output_folder)
-        data_files = list(file for file in
-                            glob.iglob(os.path.join(scrapper.get_storage_path(), pattern)))
+    for scrapper, data_files in enumerate_scrapper_with_files(output_folder):
         if not data_files:
             print(f'Failed to find file for scrapper {scrapper.chain}')
             return

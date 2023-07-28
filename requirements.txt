@@ -1,6 +1,6 @@
 jupyter==1.0.0
 matplotlib==3.7.2
-il-supermarket-scraper==0.2.9
+il-supermarket-scraper==0.3
 ipyleaflet==0.17.3
 PyBidi==1.0
 python-bidi==0.4.2

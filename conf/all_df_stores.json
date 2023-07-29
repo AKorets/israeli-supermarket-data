@@ -1,0 +1,53 @@
+{
+    "ignore": [
+        "subchainname",
+        "xmldocversion",
+        "latitude",
+        "longitude",
+        "lastupdatetime",
+        "branches",
+        "chainname",
+        "subchains"
+    ],
+    "tags_dict": {},
+    "tags": [
+        "bikoretno",
+        "chainid",
+        "zipcode",
+        "storeid",
+        "lastupdatedate",
+        "storetype",
+        "storename",
+        "subchainid",
+        "city",
+        "address"
+    ],
+    "encoding": {
+        "Dor Alon": "utf-16",
+        "GoodPharm": "utf-8",
+        "Hazi Hinam": "utf-16",
+        "Keshet Taamim": "utf-16",
+        "King Store": "utf-8",
+        "Maayan2000": "utf-8",
+        "Osher Ad": "utf-16",
+        "Polizer": "utf-16",
+        "Rami Levy": "utf-16",
+        "ShefaBarcartAshem": "utf-8",
+        "Shufersal": "UTF-8-sig",
+        "Shuk Ahir": "utf-8",
+        "Stop Market": "utf-16",
+        "Super-Pharm": "utf-8",
+        "SuperYuda": "utf-8",
+        "Tiv Taam": "utf-16",
+        "Victory": "utf-8",
+        "Yellow": "utf-16",
+        "Yohananof": "utf-16",
+        "ZolVeBegadol": "utf-8",
+        "bareket": "utf-8",
+        "mahsani a shuk": "utf-8",
+        "mega": "utf-16",
+        "mega-market": "utf-16",
+        "salachdabach": "utf-16",
+        "ybitan": "utf-16"
+    }
+}

@@ -324,14 +324,31 @@ def generate_df_stores_configurations_base():
             "subchains", "lastupdatetime"}
     tags_dict = {}
     provider_encoding = {'Dor Alon': 'utf-16',
-     'GoodPharm': 'utf-8', 'Hazi Hinam': 'utf-16', 'Keshet Taamim': 'utf-16',
-     'King Store': 'utf-8', 'Maayan2000': 'utf-8', 'Osher Ad': 'utf-16',
-     'Polizer': 'utf-16', 'Rami Levy': 'utf-16', 'ShefaBarcartAshem': 'utf-8',
-     'Shufersal': 'UTF-8-sig', 'Shuk Ahir': 'utf-8', 'Stop Market': 'utf-16',
-     'Super-Pharm': 'utf-8', 'SuperYuda': 'utf-8', 'Tiv Taam': 'utf-16',
-     'Yellow': 'utf-16', 'Yohananof': 'utf-16', 'ZolVeBegadol': 'utf-8',
-     'mega': 'utf-16', 'mega-market': 'utf-16', 'salachdabach': 'utf-16',
-     'ybitan': 'utf-16'}
+ 'GoodPharm': 'utf-8',
+ 'Hazi Hinam': 'utf-16',
+ 'Keshet Taamim': 'utf-16',
+ 'King Store': 'utf-8',
+ 'Maayan2000': 'utf-8',
+ 'Osher Ad': 'utf-16',
+ 'Polizer': 'utf-16',
+ 'Rami Levy': 'utf-16',
+ 'ShefaBarcartAshem': 'utf-8',
+ 'Shufersal': 'UTF-8-sig',
+ 'Shuk Ahir': 'utf-8',
+ 'Stop Market': 'utf-16',
+ 'Super-Pharm': 'utf-8',
+ 'SuperYuda': 'utf-8',
+ 'Tiv Taam': 'utf-16',
+ 'Victory': 'utf-8',
+ 'Yellow': 'utf-16',
+ 'Yohananof': 'utf-16',
+ 'ZolVeBegadol': 'utf-8',
+ 'bareket': 'utf-8',
+ 'mahsani a shuk': 'utf-8',
+ 'mega': 'utf-16',
+ 'mega-market': 'utf-16',
+ 'salachdabach': 'utf-16',
+ 'ybitan': 'utf-16'}
     all_stores = {'ignore':  list(ignore),
                  'tags_dict': tags_dict,
                  'tags':list(tags),
@@ -367,7 +384,7 @@ def generate_df_stores(tags, ignore, tags_dict, provider_encoding, output_folder
                                                              tags_dict)
         except: # pylint: disable=bare-except #to add encoding
             del provider_encoding[scrapper.chain]
-            print(scrapper.chain)
+            print('failed to generate encoding for '+scrapper.chain)
     pprint(provider_encoding)
     pprint(run_result)
 

@@ -38,6 +38,7 @@ Example of store data
 
 	from store_df_parser import download_all_stores
 	df = download_all_stores()
+ 	df.head(4)
  
 |     | provider   |   bikoretno |       chainid | zipcode   |   storeid | lastupdatedate      |   storetype | storename            |   subchainid | city   | address           |
 |----:|:-----------|------------:|--------------:|:----------|----------:|:--------------------|------------:|:---------------------|-------------:|:-------|:------------------|

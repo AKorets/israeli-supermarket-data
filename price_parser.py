@@ -8,42 +8,9 @@ from il_supermarket_scarper.main import ScarpingTask
 from il_supermarket_scarper.utils.file_types import FileTypesFilters
 import pandas as pd
 from tools import load_conf
-from xml_parser import get_root
+from xml_parser import get_root, parse_item_xml
 
 PRICE_ENCODING = 'utf-8-sig'
-
-def parse_price_xml(root, provider, tags, ignore, tags_dict, item_info_dict,
-                    price_rows, stop_tag='itemcode'):
-    """analyse "price item" by going through the xml"""
-    if root is None:
-        return
-
-    have_stop_tag = False
-
-    for child in root.getchildren():
-        if len(child.getchildren()) > 0:
-            parse_price_xml(child, provider, tags, ignore, tags_dict, item_info_dict,
-                            price_rows, stop_tag)
-        else:
-            tag = child.tag.lower()
-            if tag in ignore:
-                continue
-            tag_name = tags_dict.get(tag, tag)
-            item_info_dict[tag_name] = child.text
-            #print(tag_name, child.tag, child.text)
-            if tag_name == stop_tag:
-                have_stop_tag = True
-                #print("")
-
-
-    if have_stop_tag:
-        row = [provider]
-        #print(item_info_dict)
-        for tag in tags:
-            row.append(item_info_dict[tag])
-        price_rows.append(row)
-
-    return
 
 def enumerate_scrapper_with_files(output_folder):
     """usage for scrapper, data_files in enumerate_scrapper_with_files(output_folder)"""
@@ -99,8 +66,8 @@ def download_all_prices(progress_bar=None, force=False, output_folder = "price_d
                 failed_files.append(data_file)
                 continue
             item_info_dict = {}
-            parse_price_xml(root, scrapper.chain, tags, ignore, tags_dict,
-                                item_info_dict, price_rows)
+            parse_item_xml(root, scrapper.chain, tags, ignore, tags_dict,
+                                item_info_dict, price_rows, 'itemcode')
 
         if progress_bar:
             progress_bar.value += 1

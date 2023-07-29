@@ -13,6 +13,7 @@ import shutil
 from pprint import pprint
 import il_supermarket_scarper.scrappers as all_scrappers
 from il_supermarket_scarper.utils.file_types import FileTypesFilters
+from il_supermarket_scarper.scrappers_factory import ScraperFactory
 from il_supermarket_scarper.main import ScarpingTask
 from tools import save_conf
 from xml_parser import get_root
@@ -85,7 +86,7 @@ class Mapper:
         if self.smart_print(root, ignore_dict, name_dict):
             print (f'The format of {xml_path} is parsed')
 
-    def check_prices_tags(self, file, encoding, tags, ignore, tags_dict):
+    def check_xml_tags(self, file, encoding, tags, ignore, tags_dict):
         """find all new or missing tags (that doesnt part of tags or ignore dictionaries)"""
         root = get_root(file, encoding)
         tag_set = set()
@@ -259,7 +260,7 @@ def download_all_prices(tags, ignore, tags_dict):
         print(scrapper.chain, provider_encoding[scrapper.chain])
         data_file = get_data_file(data_files, provider_encoding[scrapper.chain])
         used_files.append(data_file)
-        run_result[scrapper.chain] = my_mapper.check_prices_tags(data_file,
+        run_result[scrapper.chain] = my_mapper.check_xml_tags(data_file,
                                                                  provider_encoding[scrapper.chain],
                                                                  tags, ignore,
                                                                  tags_dict)
@@ -306,6 +307,69 @@ def generate_prices_configuration():
                  'tags':list(tags)}
     save_conf('conf/all_prices.json', all_prices)
     download_all_prices(tags, ignore, tags_dict)
+
+
+def generate_df_stores_configurations_base():
+    """start generate dataframe stores configurations"""
+    output_folder = "data_stores"
+    ScarpingTask(dump_folder_name=output_folder, only_latest=True,
+                                     files_types=[FileTypesFilters.STORE_FILE.name],
+                                     lookup_in_db=False).start()
+    tags = {'subchainid', 'storeid', 'city', 'bikoretno', 'storename',
+            'zipcode', 'chainid', 'lastupdatedate',
+            'address', 'storetype'}
+    ignore = {
+            "latitude", "longitude", "chainname",
+            "subchainname", "branches", "xmldocversion",
+            "subchains", "lastupdatetime"}
+    tags_dict = {}
+    provider_encoding = {'Dor Alon': 'utf-16',
+     'GoodPharm': 'utf-8', 'Hazi Hinam': 'utf-16', 'Keshet Taamim': 'utf-16',
+     'King Store': 'utf-8', 'Maayan2000': 'utf-8', 'Osher Ad': 'utf-16',
+     'Polizer': 'utf-16', 'Rami Levy': 'utf-16', 'ShefaBarcartAshem': 'utf-8',
+     'Shufersal': 'UTF-8-sig', 'Shuk Ahir': 'utf-8', 'Stop Market': 'utf-16',
+     'Super-Pharm': 'utf-8', 'SuperYuda': 'utf-8', 'Tiv Taam': 'utf-16',
+     'Yellow': 'utf-16', 'Yohananof': 'utf-16', 'ZolVeBegadol': 'utf-8',
+     'mega': 'utf-16', 'mega-market': 'utf-16', 'salachdabach': 'utf-16',
+     'ybitan': 'utf-16'}
+    all_stores = {'ignore':  list(ignore),
+                 'tags_dict': tags_dict,
+                 'tags':list(tags),
+                 'encoding':provider_encoding}
+    save_conf('conf/all_df_stores.json', all_stores)
+    generate_df_stores(tags, ignore, tags_dict, provider_encoding, output_folder)
+    shutil.rmtree(output_folder)
+
+def generate_df_stores(tags, ignore, tags_dict, provider_encoding, output_folder):
+    """generate dataframe stores checker"""
+    my_mapper = Mapper()
+
+    run_result = {}
+    all_scrapers = ScraperFactory.all_scrapers()
+    scrappers = [s(output_folder) for s in all_scrapers]
+    for scrapper in scrappers:
+        pattern = f'{FileTypesFilters.STORE_FILE.value["should_contain"]}*.xml'
+        data_files = list(file for file in
+                            glob.iglob(os.path.join(scrapper.get_storage_path(), pattern)))
+        if not data_files:
+            print(f'Failed to find file for scrapper {scrapper.chain}')
+            continue
+        data_file = data_files[0]
+        if scrapper.chain not in provider_encoding:
+
+            provider_encoding[scrapper.chain] = 'utf-16'
+            print('generating encoding',scrapper.chain,provider_encoding[scrapper.chain])
+        #print(scrapper.chain, provider_encoding[scrapper.chain])
+        try:
+            run_result[scrapper.chain] = my_mapper.check_xml_tags(data_file,
+                                                             provider_encoding[scrapper.chain],
+                                                             tags, ignore,
+                                                             tags_dict)
+        except: # pylint: disable=bare-except #to add encoding
+            del provider_encoding[scrapper.chain]
+            print(scrapper.chain)
+    pprint(provider_encoding)
+    pprint(run_result)
 
 if __name__ == "__main__":
     generate_stores_configurations_base()

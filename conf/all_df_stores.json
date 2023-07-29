@@ -1,4 +1,7 @@
 {
+	"ignore_file_dict":{
+		"Rami Levy":"storesfull"
+	},
     "ignore": [
         "subchainname",
         "xmldocversion",

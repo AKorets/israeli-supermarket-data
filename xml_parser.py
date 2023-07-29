@@ -26,11 +26,8 @@ def parse_item_xml(root, provider, tags, ignore, tags_dict, item_info_dict,
 
     have_stop_tag = False
 
-    for child in root.getchildren():
-        if len(child.getchildren()) > 0:
-            parse_item_xml(child, provider, tags, ignore, tags_dict, item_info_dict,
-                            item_rows, stop_tag)
-        else:
+    for child in root.getchildren():#root layer firt
+        if len(child.getchildren()) == 0:
             tag = child.tag.lower()
             if tag in ignore:
                 continue
@@ -40,6 +37,11 @@ def parse_item_xml(root, provider, tags, ignore, tags_dict, item_info_dict,
             if tag_name == stop_tag:
                 have_stop_tag = True
                 #print("")
+
+    for child in root.getchildren():
+        if len(child.getchildren()) > 0:
+            parse_item_xml(child, provider, tags, ignore, tags_dict, item_info_dict,
+                            item_rows, stop_tag)
 
 
     if have_stop_tag:

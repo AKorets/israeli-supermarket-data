@@ -12,16 +12,18 @@ from xml_parser import get_root
 
 PRICE_ENCODING = 'utf-8-sig'
 
-def parse_price_xml(root, provider, tags, ignore, tags_dict, item_info_dict, price_rows):
+def parse_price_xml(root, provider, tags, ignore, tags_dict, item_info_dict,
+                    price_rows, stop_tag='itemcode'):
     """analyse "price item" by going through the xml"""
     if root is None:
         return
 
-    have_item_id = False
+    have_stop_tag = False
 
     for child in root.getchildren():
         if len(child.getchildren()) > 0:
-            parse_price_xml(child, provider, tags, ignore, tags_dict, item_info_dict, price_rows)
+            parse_price_xml(child, provider, tags, ignore, tags_dict, item_info_dict,
+                            price_rows, stop_tag)
         else:
             tag = child.tag.lower()
             if tag in ignore:
@@ -29,12 +31,12 @@ def parse_price_xml(root, provider, tags, ignore, tags_dict, item_info_dict, pri
             tag_name = tags_dict.get(tag, tag)
             item_info_dict[tag_name] = child.text
             #print(tag_name, child.tag, child.text)
-            if tag_name == 'itemcode':
-                have_item_id = True
+            if tag_name == stop_tag:
+                have_stop_tag = True
                 #print("")
 
 
-    if have_item_id:
+    if have_stop_tag:
         row = [provider]
         #print(item_info_dict)
         for tag in tags:

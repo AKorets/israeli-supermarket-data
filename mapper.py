@@ -329,6 +329,7 @@ def generate_df_stores_configurations_base():
  'Keshet Taamim': 'utf-16',
  'King Store': 'utf-8',
  'Maayan2000': 'utf-8',
+ 'Netiv Hasef': 'utf-8',
  'Osher Ad': 'utf-16',
  'Polizer': 'utf-16',
  'Rami Levy': 'utf-16',
@@ -352,7 +353,9 @@ def generate_df_stores_configurations_base():
     all_stores = {'ignore':  list(ignore),
                  'tags_dict': tags_dict,
                  'tags':list(tags),
-                 'encoding':provider_encoding}
+                 'encoding':provider_encoding,
+                 "ignore_file_dict":{"Rami Levy":"storesfull"}
+                 }
     save_conf('conf/all_df_stores.json', all_stores)
     generate_df_stores(tags, ignore, tags_dict, provider_encoding, output_folder)
     shutil.rmtree(output_folder)

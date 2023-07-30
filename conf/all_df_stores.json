@@ -1,29 +1,26 @@
 {
-	"ignore_file_dict":{
-		"Rami Levy":"storesfull"
-	},
     "ignore": [
-        "subchainname",
-        "xmldocversion",
-        "latitude",
-        "longitude",
-        "lastupdatetime",
-        "branches",
         "chainname",
-        "subchains"
+        "xmldocversion",
+        "branches",
+        "subchains",
+        "longitude",
+        "latitude",
+        "subchainname",
+        "lastupdatetime"
     ],
     "tags_dict": {},
     "tags": [
-        "bikoretno",
-        "chainid",
-        "zipcode",
-        "storeid",
         "lastupdatedate",
         "storetype",
-        "storename",
+        "chainid",
         "subchainid",
+        "address",
         "city",
-        "address"
+        "storeid",
+        "bikoretno",
+        "storename",
+        "zipcode"
     ],
     "encoding": {
         "Dor Alon": "utf-16",
@@ -32,6 +29,7 @@
         "Keshet Taamim": "utf-16",
         "King Store": "utf-8",
         "Maayan2000": "utf-8",
+        "Netiv Hasef": "utf-8",
         "Osher Ad": "utf-16",
         "Polizer": "utf-16",
         "Rami Levy": "utf-16",
@@ -52,5 +50,8 @@
         "mega-market": "utf-16",
         "salachdabach": "utf-16",
         "ybitan": "utf-16"
+    },
+    "ignore_file_dict": {
+        "Rami Levy": "storesfull"
     }
 }

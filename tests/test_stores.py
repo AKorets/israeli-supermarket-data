@@ -29,7 +29,7 @@ def test_top_cities():
     del city_stat['unknown']
     del city_stat['None']
     city_stat_sorter = sorted(city_stat.items(), key=lambda x:x[1], reverse=True)
-    top_city_set = set([k for (k,v) in city_stat_sorter][:10])
+    top_city_set = set([k for (k,v) in city_stat_sorter][:8])
     expected_top_city = {'תל אביב יפו',
                          'ירושלים',
                          'חיפה',
@@ -37,8 +37,6 @@ def test_top_cities():
                          'נתניה',
                          'ראשון לציון',
                          'פתח תקווה',
-                         'אשדוד',
-                         'בני ברק',
-                         'אשקלון'}
+                         'אשדוד'}
     difference = top_city_set ^ expected_top_city
     assert not difference

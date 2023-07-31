@@ -20,6 +20,7 @@ from xml_parser import get_root
 from store_parser import generate_store_dictionary
 from store_parser import generate_store_dictionary_lower_case, save_store_conf
 from price_parser import enumerate_scrapper_with_files
+from price_parser import DownloadTypeData
 
 
 class Mapper:
@@ -238,32 +239,39 @@ def get_data_file(data_files, encoding):
     for file_path in data_files:
         with open(file_path, encoding=encoding) as file:
             try:
-                if 'Items Count="0"' not in file.read():#workaround for dor alon, empty prices file
+                file_content = file.read()
+                #workaround for dor alon, empty prices file
+                item_counts = 'Items Count="0"' not in file_content
+                #workaround for ybitan, empty promos
+                promotions1 = 'Promotions Count="0"' not in file_content
+                if item_counts and promotions1:
                     return file_path
             except: # pylint: disable=bare-except #not dor alon
                 return file_path
     return ""
 
-def download_all_prices(tags, ignore, tags_dict):
+def download_all_prices(tags, ignore, tags_dict,
+                        output_folder = "price_data", download_type_data=None):
     """show current status of prices xmls (from all providers) """
-    output_folder = "price_data"
     run_result = {}
     provider_encoding = {}
     used_files = []
     my_mapper = Mapper()
-    for scrapper, data_files in enumerate_scrapper_with_files(output_folder):
+    for scrapper, data_files in enumerate_scrapper_with_files(output_folder, download_type_data):
         if not data_files:
             print(f'Failed to find file for scrapper {scrapper.chain}')
             return
         if scrapper.chain not in provider_encoding:
             provider_encoding[scrapper.chain] = 'utf-8-sig'
-        print(scrapper.chain, provider_encoding[scrapper.chain])
         data_file = get_data_file(data_files, provider_encoding[scrapper.chain])
+        print(scrapper.chain, provider_encoding[scrapper.chain], data_file)
         used_files.append(data_file)
         run_result[scrapper.chain] = my_mapper.check_xml_tags(data_file,
                                                                  provider_encoding[scrapper.chain],
                                                                  tags, ignore,
                                                                  tags_dict)
+        assert len(run_result[scrapper.chain]['new_tag'])==0
+        assert len(run_result[scrapper.chain]['missing_tag'])==0
         shutil.rmtree(output_folder)
     pprint(used_files)
     pprint(provider_encoding)
@@ -307,6 +315,39 @@ def generate_prices_configuration():
                  'tags':list(tags)}
     save_conf('conf/all_prices.json', all_prices)
     download_all_prices(tags, ignore, tags_dict)
+
+def generate_promo_configuration():
+    """generate all_promotions.json"""
+    ignore = {'dllverno', 'promotions', 'xmldocversion', 'remarks', 'maxqty',
+              'weightunit','isweightedpromo','additionalisactive',
+              'additionalgiftcount', 'additionalsgiftcount'
+              , 'additionalsminbasketamount', 'additionalrestrictions'
+              , 'discountedpricepermida', 'discountedprice',
+              'discountrate', 'discounttype',
+              'giftsitems', 'giftitemprice','additionalminbasketamount'
+              , 'itemtype'
+             }
+    tags_dict = {'minnoofitemofered':'minnoofitemsoffered',
+                'additionaliscoupon':'additionalscoupon',
+                'additionalstotals':'additionalistotal',
+                'promotionupdatedate':'priceupdatedate',
+                'minpurchaseamount':'minqty',
+                'minpurchaseamnt':'minqty'}
+    tags = { 'chainid', 'storeid', 'bikoretno',  'subchainid'
+             , 'promotiondescription', 'priceupdatedate',
+            'clubid', 'promotionendhour', 'allowmultiplediscounts',
+            'additionalscoupon', 'promotionstartdate', 'promotionid',
+            'promotionstarthour', 'isgiftitem', 'itemcode',
+            'minqty', 'rewardtype', 'minnoofitemsoffered',
+           'promotionenddate', 'additionalistotal'}
+    all_prices = {'ignore':  list(ignore),
+                 'tags_dict': tags_dict,
+                 'tags':list(tags)}
+    save_conf('conf/all_promotions.json', all_prices)
+    pattern = f'{FileTypesFilters.PROMO_FILE.value["should_contain"]}*.xml'
+    files_types = FileTypesFilters.only_promo()
+    download_type_data = DownloadTypeData(pattern, files_types)
+    download_all_prices(tags, ignore, tags_dict, 'promo_data', download_type_data)
 
 
 def generate_df_stores_configurations_base():
@@ -395,3 +436,4 @@ if __name__ == "__main__":
     generate_stores_configurations_base()
     generate_prices_configuration()
     generate_df_stores_configurations_base()
+    generate_promo_configuration()

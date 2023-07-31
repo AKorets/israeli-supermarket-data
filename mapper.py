@@ -394,3 +394,4 @@ def generate_df_stores(tags, ignore, tags_dict, provider_encoding, output_folder
 if __name__ == "__main__":
     generate_stores_configurations_base()
     generate_prices_configuration()
+    generate_df_stores_configurations_base()

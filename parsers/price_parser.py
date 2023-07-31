@@ -65,7 +65,7 @@ def download_all_promo_prices(progress_bar=None, force=False, output_folder = "p
     pattern = f'{FileTypesFilters.PROMO_FILE.value["should_contain"]}*.xml'
     files_types = FileTypesFilters.only_promo()
     download_type_data = DownloadTypeData(pattern, files_types)
-    download_all_prices(progress_bar, force, output_folder,
+    return download_all_prices(progress_bar, force, output_folder,
                         data_prices_path, conf, download_type_data)
 
 def parse_item_xml_extension(root, chain_name, all_prices, item_info_dict,
@@ -99,7 +99,7 @@ def download_all_prices(progress_bar=None, force=False,
                 print('failed to get root of '+data_file)
                 failed_files.append(data_file)
                 continue
-            Logger.info(f"Parsing file : {data_file}")
+            #Logger.info(f"Parsing file : {data_file}")
             item_info_dict = {}
             parse_item_xml_extension(root, scrapper.chain, all_prices, item_info_dict,
                                      price_rows, 'itemcode')

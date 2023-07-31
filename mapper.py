@@ -325,21 +325,19 @@ def generate_promo_configuration():
               , 'discountedpricepermida', 'discountedprice',
               'discountrate', 'discounttype',
               'giftsitems', 'giftitemprice','additionalminbasketamount'
-              ,'clubid', 'itemtype'
+              ,'clubid', 'itemtype','additionalscoupon','additionaliscoupon'
+              , 'additionalistotal', 'additionalstotals',
+              'minqty', 'minpurchaseamount', 'minpurchaseamnt'
              }
     tags_dict = {'minnoofitemofered':'minnoofitemsoffered',
-                'additionaliscoupon':'additionalscoupon',
-                'additionalstotals':'additionalistotal',
-                'promotionupdatedate':'priceupdatedate',
-                'minpurchaseamount':'minqty',
-                'minpurchaseamnt':'minqty'}
+                'promotionupdatedate':'priceupdatedate'}
     tags = { 'chainid', 'storeid', 'bikoretno',  'subchainid'
              , 'promotiondescription', 'priceupdatedate',
              'promotionendhour', 'allowmultiplediscounts',
-            'additionalscoupon', 'promotionstartdate', 'promotionid',
+             'promotionstartdate', 'promotionid',
             'promotionstarthour', 'isgiftitem', 'itemcode',
-            'minqty', 'rewardtype', 'minnoofitemsoffered',
-           'promotionenddate', 'additionalistotal'}
+             'rewardtype', 'minnoofitemsoffered',
+           'promotionenddate'}
     all_prices = {'ignore':  list(ignore),
                  'tags_dict': tags_dict,
                  'tags':list(tags)}

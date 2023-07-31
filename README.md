@@ -52,7 +52,7 @@ Example of store data
 Quick start
 -----------
 
-This set of command, installed the project on your computer, and run it on [jupyter](https://jupyter.org/)
+This set of commands installs the project on your computer and runs it on [Jupyter](https://jupyter.org/).
 
 	git clone https://github.com/AKorets/israeli-supermarket-data
 	cd israeli-supermarket-data

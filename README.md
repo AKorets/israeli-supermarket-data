@@ -2,16 +2,16 @@ Israel Supermarket Data: Transform and visualize the data that published by the 
 =======================================
 The data downloading used by [erlichsefi/israeli-supermarket-scarpers](https://github.com/erlichsefi/israeli-supermarket-scarpers/) project
 
-All data based on goverment project of price transparency,
+All data is based on the government's project for price transparency.
     שקיפות מחירים (השוואת מחירים) - https://www.gov.il/he/departments/legalInfo/cpfta_prices_regulations  
-The current state of original data, are mess that contains bunch of xml with different schema and encoding.   
-The main goal of this project, is to make the data accessible and in one format ([pandas](https://pandas.pydata.org/docs/index.html) csv)
+The current state of the original data is a mess that contains a bunch of XML with different schemas and encodings.   
+The main goal of this project is to make the data accessible and in one format ([pandas](https://pandas.pydata.org/docs/index.html) csv)
 
 [![Pylint](https://github.com/AKorets/israeli-supermarket-data/actions/workflows/pylint.yml/badge.svg)](https://github.com/AKorets/israeli-supermarket-data/actions/workflows/pylint.yml)
 [![Pytest](https://github.com/AKorets/israeli-supermarket-data/actions/workflows/pytest.yml/badge.svg)](https://github.com/AKorets/israeli-supermarket-data/actions/workflows/pytest.yml)  
 Example
 -----------
-Example of map with that shows statistics of store per city (city_visual.ipynb)
+An example of a map that shows statistics on stores per city (city_visual.ipynb)
 
 ![Store Per City Map](img/Map.png)
 
@@ -52,7 +52,7 @@ Example of store data
 Quick start
 -----------
 
-This set of command, installed the project on your computer, and run it on [jupyter](https://jupyter.org/)
+This set of commands puts the project on your computer and runs it on [Jupyter](https://jupyter.org/).
 
 	git clone https://github.com/AKorets/israeli-supermarket-data
 	cd israeli-supermarket-data

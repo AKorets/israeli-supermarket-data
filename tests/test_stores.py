@@ -1,5 +1,5 @@
 import re
-from store_parser import download_all_stores, get_city_stat
+from parsers.store_parser import download_all_stores, get_city_stat
 
 def test_online_list():
     """test if list of online stores are same"""

@@ -10,7 +10,7 @@ from il_supermarket_scarper.scrappers_factory import ScraperFactory
 from il_supermarket_scarper.utils.file_types import FileTypesFilters
 from il_supermarket_scarper.utils import Logger
 from tools import save_conf, load_conf
-from xml_parser import get_root
+from .xml_parser import get_root
 
 def save_store_conf(chain_name, encoding, name_dict, ignore_dict, ignore_file):
     """save store configuration"""

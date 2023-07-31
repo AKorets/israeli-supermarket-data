@@ -8,7 +8,7 @@ from il_supermarket_scarper.main import ScarpingTask
 from il_supermarket_scarper.scrappers_factory import ScraperFactory
 from il_supermarket_scarper.utils.file_types import FileTypesFilters
 from tools import load_conf
-from xml_parser import get_root, parse_item_xml
+from .xml_parser import get_root, parse_item_xml
 
 
 def load_all_stores(data_stores_path = 'data/stores.csv', progress_bar=None):

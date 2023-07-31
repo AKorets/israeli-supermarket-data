@@ -10,7 +10,7 @@ from il_supermarket_scarper.main import ScarpingTask
 from il_supermarket_scarper.utils.file_types import FileTypesFilters
 import pandas as pd
 from tools import load_conf
-from xml_parser import get_root, parse_item_xml
+from .xml_parser import get_root, parse_item_xml
 
 PRICE_ENCODING = 'utf-8-sig'
 

@@ -21,7 +21,7 @@ Store per city chart (city_visual.ipynb)
 
 Example of item data
 
-	from price_parser import download_all_prices
+	from parsers.price_parser import download_all_prices
 	
 	df = download_all_prices()
 	df1.tail(6)
@@ -38,7 +38,7 @@ Example of item data
 
 Example of store data
 
-	from store_df_parser import download_all_stores
+	from parsers.store_df_parser import download_all_stores
 	df = download_all_stores()
  	df.head(4)
  

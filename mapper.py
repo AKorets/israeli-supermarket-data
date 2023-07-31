@@ -16,11 +16,11 @@ from il_supermarket_scarper.utils.file_types import FileTypesFilters
 from il_supermarket_scarper.scrappers_factory import ScraperFactory
 from il_supermarket_scarper.main import ScarpingTask
 from tools import save_conf
-from xml_parser import get_root
-from store_parser import generate_store_dictionary
-from store_parser import generate_store_dictionary_lower_case, save_store_conf
-from price_parser import enumerate_scrapper_with_files
-from price_parser import DownloadTypeData
+from parsers.xml_parser import get_root
+from parsers.store_parser import generate_store_dictionary
+from parsers.store_parser import generate_store_dictionary_lower_case, save_store_conf
+from parsers.price_parser import enumerate_scrapper_with_files
+from parsers.price_parser import DownloadTypeData
 
 
 class Mapper:
@@ -325,7 +325,7 @@ def generate_promo_configuration():
               , 'discountedpricepermida', 'discountedprice',
               'discountrate', 'discounttype',
               'giftsitems', 'giftitemprice','additionalminbasketamount'
-              , 'itemtype'
+              ,'clubid', 'itemtype'
              }
     tags_dict = {'minnoofitemofered':'minnoofitemsoffered',
                 'additionaliscoupon':'additionalscoupon',
@@ -335,7 +335,7 @@ def generate_promo_configuration():
                 'minpurchaseamnt':'minqty'}
     tags = { 'chainid', 'storeid', 'bikoretno',  'subchainid'
              , 'promotiondescription', 'priceupdatedate',
-            'clubid', 'promotionendhour', 'allowmultiplediscounts',
+             'promotionendhour', 'allowmultiplediscounts',
             'additionalscoupon', 'promotionstartdate', 'promotionid',
             'promotionstarthour', 'isgiftitem', 'itemcode',
             'minqty', 'rewardtype', 'minnoofitemsoffered',

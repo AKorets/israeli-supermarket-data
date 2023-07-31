@@ -8,6 +8,7 @@ from dataclasses import dataclass
 from il_supermarket_scarper.scrappers_factory import ScraperFactory
 from il_supermarket_scarper.main import ScarpingTask
 from il_supermarket_scarper.utils.file_types import FileTypesFilters
+from il_supermarket_scarper.utils import Logger
 import pandas as pd
 from tools import load_conf
 from .xml_parser import get_root, parse_item_xml
@@ -58,13 +59,14 @@ def save_all_prices(price_rows, data_prices_path, all_prices):
 
 def download_all_promo_prices(progress_bar=None, force=False, output_folder = "promo_data",
                         data_prices_path = 'data/promo.csv',
+                        conf='conf/all_promotions.json',
                         download_type_data:DownloadTypeData=None):
     """load or create dataframe based on promo from all providers """
     pattern = f'{FileTypesFilters.PROMO_FILE.value["should_contain"]}*.xml'
     files_types = FileTypesFilters.only_promo()
     download_type_data = DownloadTypeData(pattern, files_types)
     download_all_prices(progress_bar, force, output_folder,
-                        data_prices_path, download_type_data)
+                        data_prices_path, conf, download_type_data)
 
 def parse_item_xml_extension(root, chain_name, all_prices, item_info_dict,
                              price_rows, stop_tag):
@@ -76,6 +78,7 @@ def parse_item_xml_extension(root, chain_name, all_prices, item_info_dict,
 def download_all_prices(progress_bar=None, force=False,
                         output_folder = "price_data",
                         data_prices_path = 'data/prices.csv',
+                        conf='conf/all_prices.json',
                         download_type_data:DownloadTypeData=None):
     """load or create dataframe based on prices from all providers (from all providers) """
     if os.path.isfile(data_prices_path) and not force:
@@ -83,7 +86,7 @@ def download_all_prices(progress_bar=None, force=False,
 
     #collect price_rows from all providers
     price_rows = []
-    all_prices = load_conf('conf/all_prices.json')
+    all_prices = load_conf(conf)
     failed_files = []
     for scrapper, data_files in enumerate_scrapper_with_files(output_folder, download_type_data):
         if not data_files:
@@ -96,6 +99,7 @@ def download_all_prices(progress_bar=None, force=False,
                 print('failed to get root of '+data_file)
                 failed_files.append(data_file)
                 continue
+            Logger.info(f"Parsing file : {data_file}")
             item_info_dict = {}
             parse_item_xml_extension(root, scrapper.chain, all_prices, item_info_dict,
                                      price_rows, 'itemcode')

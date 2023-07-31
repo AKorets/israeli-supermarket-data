@@ -1,6 +1,6 @@
 from il_supermarket_scarper.main import ScarpingTask
 from il_supermarket_scarper.utils.file_types import FileTypesFilters
-from store_parser import download_all_stores
+from parsers.store_parser import download_all_stores
 
 def download_store_data(output_folder):
     """download store data from providers"""

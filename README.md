@@ -19,6 +19,7 @@ Store per city chart [city_visual.ipynb](city_visual.ipynb)
 
 ![Store Per City chart](img/Store_per_city.png)
 
+Example how to download, and show data in pandas format are insde [Items.md](Items.md)
 Example of item data
 
 	from parsers.price_parser import download_all_prices

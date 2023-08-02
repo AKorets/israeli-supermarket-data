@@ -11,11 +11,11 @@ The main goal of this project is to make the data accessible and in one format (
 [![Pytest](https://github.com/AKorets/israeli-supermarket-data/actions/workflows/pytest.yml/badge.svg)](https://github.com/AKorets/israeli-supermarket-data/actions/workflows/pytest.yml)  
 Example
 -----------
-An example of a map that shows statistics on stores per city (city_visual.ipynb)
+An example of a map that shows statistics on stores per city [city_visual.ipynb](city_visual.ipynb)
 
 ![Store Per City Map](img/Map.png)
 
-Store per city chart (city_visual.ipynb)
+Store per city chart [city_visual.ipynb](city_visual.ipynb)
 
 ![Store Per City chart](img/Store_per_city.png)
 

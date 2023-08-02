@@ -43,7 +43,8 @@ def load_all_prices(data_prices_path = 'data/prices.csv', progress_bar=None):
     """load all prices from data_prices_path"""
     if progress_bar:
         progress_bar.value = progress_bar.max/2
-    data_frame = pd.read_csv(data_prices_path, low_memory=False)
+    iterator_data = pd.read_csv(data_prices_path, iterator=True, chunksize=20000000, low_memory = False)
+    data_frame = pd.concat(iterator_data, ignore_index=True)
     if progress_bar:
         progress_bar.value = progress_bar.max
     return data_frame

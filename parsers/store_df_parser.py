@@ -15,7 +15,7 @@ def load_all_stores(data_stores_path = 'data/stores.csv', progress_bar=None):
     """load all prices from data_stores_path"""
     if progress_bar:
         progress_bar.value = progress_bar.max/2
-    data_frame = pd.read_csv(data_stores_path)
+    data_frame = pd.read_csv(data_stores_path, dtype=str)
     if progress_bar:
         progress_bar.value = progress_bar.max
     return data_frame
@@ -43,7 +43,7 @@ def enumerate_scrapper_with_files(output_folder, all_stores):
 def save_all_stores(store_rows, data_stores_path, tags):
     """create dataframe based on store_rows"""
     header = ['provider'] + tags
-    data_frame = pd.DataFrame(store_rows, columns=header)
+    data_frame = pd.DataFrame(store_rows, columns=header, dtype=str)
     filepath = Path(data_stores_path)
     filepath.parent.mkdir(parents=True, exist_ok=True)
     data_frame.to_csv(filepath, index=False)

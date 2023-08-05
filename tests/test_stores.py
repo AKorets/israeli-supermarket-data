@@ -1,5 +1,6 @@
 import re
 from parsers.store_parser import download_all_stores, get_city_stat
+from parsers.store_df_parser import download_all_stores as download_all_stores_df
 
 def test_online_list():
     """test if list of online stores are same"""
@@ -40,3 +41,17 @@ def test_top_cities():
                          'אשדוד'}
     difference = top_city_set ^ expected_top_city
     assert not difference
+
+def minimal_unique_storeid():
+    """Check if the unique store ID can be combined with two values."""
+    stores = download_all_stores_df()
+    columns = list(stores.columns)
+    columns.remove('lastupdatedate')
+    stores.drop_duplicates(subset=columns, inplace=True)
+    stores['chainid'] = stores['chainid'].astype('str')
+    stores['storeid'] = stores['storeid'].astype('str')
+    #stores['subchainid'] = stores['subchainid'].astype('str')
+    stores['unique_storeid'] = stores['chainid'] + stores['storeid']
+    num_u_storeid = len(stores['unique_storeid'].unique())
+    assert num_u_storeid == stores.shape[0]
+    

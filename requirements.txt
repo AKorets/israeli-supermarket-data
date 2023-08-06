@@ -5,3 +5,4 @@ ipyleaflet==0.17.3
 PyBidi==1.0
 python-bidi==0.4.2
 seaborn==0.12.2
+geopandas==0.13.2

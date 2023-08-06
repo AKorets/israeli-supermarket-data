@@ -1,26 +1,26 @@
 {
     "ignore": [
-        "chainname",
-        "xmldocversion",
-        "branches",
-        "subchains",
-        "longitude",
-        "latitude",
         "subchainname",
-        "lastupdatetime"
+        "xmldocversion",
+        "latitude",
+        "longitude",
+        "lastupdatetime",
+        "branches",
+        "subchains"
     ],
     "tags_dict": {},
     "tags": [
         "lastupdatedate",
-        "storetype",
-        "chainid",
+        "city",
         "subchainid",
         "address",
-        "city",
-        "storeid",
-        "bikoretno",
+        "storetype",
+        "zipcode",
         "storename",
-        "zipcode"
+        "chainname",
+        "chainid",
+        "storeid",
+        "bikoretno"
     ],
     "encoding": {
         "Dor Alon": "utf-16",

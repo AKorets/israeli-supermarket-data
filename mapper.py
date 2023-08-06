@@ -356,9 +356,9 @@ def generate_df_stores_configurations_base():
                                      lookup_in_db=False).start()
     tags = {'subchainid', 'storeid', 'city', 'bikoretno', 'storename',
             'zipcode', 'chainid', 'lastupdatedate',
-            'address', 'storetype'}
+            'address', 'storetype', "chainname"}
     ignore = {
-            "latitude", "longitude", "chainname",
+            "latitude", "longitude",
             "subchainname", "branches", "xmldocversion",
             "subchains", "lastupdatetime"}
     tags_dict = {}

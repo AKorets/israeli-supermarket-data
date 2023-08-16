@@ -19,7 +19,8 @@ def test_online_list():
                      'www.shukcity.co.il',
                      'www.edenteva.co.il',
                      'www.ybitan.co.il',
-                     'www.tivtaam.co.il'        #Tiv Taam
+                     'www.tivtaam.co.il',        #Tiv Taam
+                     'www.quik.co.il'
                     }
     difference = url_list ^ expected_urls
     assert not difference

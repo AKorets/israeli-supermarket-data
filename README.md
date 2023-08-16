@@ -19,6 +19,10 @@ Store per city chart [city_visual.ipynb](city_visual.ipynb)
 
 ![Store Per City chart](img/Store_per_city.png)
 
+Top Manufactorers chart
+
+![Top Manufactorers chart](img/Manuf.png)
+
 You can find examples of how to get and display data in pandas format in [Items.md](Items.md)
 
 Quick start
